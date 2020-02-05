@@ -15,7 +15,7 @@ import pydotplus
 
 
 class DecisionTreeWrap:
-    __METHOD = {"Random Forest": RanfomForestClassifier}
+    __METHOD = {"Random Forest": RandomForestClassifier}
     
     def __init__(self, train_X, train_y, test_X, test_y):
         self.train_X = train_X
@@ -27,7 +27,7 @@ class DecisionTreeWrap:
     def set_classifier(self, method="Random Forest", **kwargs):
         self.clf = self.__METHOD[method](**kwargs)
 
-    def fit(selfm **kwargs):
+    def fit(self, **kwargs):
         self.clf.fit(self.train_X, self.train_y, **kwargs)
 
     def predict(self, is_show_result=True):
@@ -53,7 +53,7 @@ class DecisionTreeWrap:
         if depth == -1:
             depth = self.clf.get_depth()
         else:
-            assert 0 <= depth <= self.clf.get_depth(), f"Please set depth from 1 to {self.clf.get_depth'(}"
+            assert 0 <= depth <= self.clf.get_depth(), f"Please set depth from 1 to {self.clf.get_depth()}"
         
         dot_data = StringIO()
         tree.export_graphviz(clf, out_file=dot_data, feature_name=self.features, max_depth=depth)
