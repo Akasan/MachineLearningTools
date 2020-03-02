@@ -13,7 +13,7 @@ from graphviz import Digraph
 import pydotplus
 
 
-class DecisionTreeWrap:
+class DecisionTree:
     __METHOD = {"Random Forest": RandomForestClassifier,
                 "Decision Tree": DecisionTreeClassifier}
     
