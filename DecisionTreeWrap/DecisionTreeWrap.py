@@ -14,7 +14,8 @@ import pydotplus
 
 
 class DecisionTreeWrap:
-    __METHOD = {"Random Forest": RandomForestClassifier}
+    __METHOD = {"Random Forest": RandomForestClassifier,
+                "Decision Tree": DecisionTreeClassifier}
     
     def __init__(self, train_X, train_y, test_X, test_y):
         """
@@ -33,6 +34,13 @@ class DecisionTreeWrap:
         self.test_y = test_y
         self.features = train_X.columns
 
+    def set_dataset(self, **kwargs):
+        """
+        Keyword Arguments:
+            
+        """
+        pass
+
     def method_list(self):
         """ print method list
 
@@ -44,6 +52,10 @@ class DecisionTreeWrap:
         for k in self.__METHOD.keys():
             print(k)
 
+    def open_method_help(self):
+        """ show help of classification method"""
+        help(self.clf)
+
     def set_classifier(self, method="Random Forest", **kwargs):
         """ select classifier method 
         You can check method list by calling method_list
@@ -51,8 +63,7 @@ class DecisionTreeWrap:
         Arguments:
             method {str} -- method name
 
-        >>> dt_wrap = DecisionTreeWrap(data)
-        >>> dt_wrap.set_classifier(method="Random Forest")   # use Random Forest Classifier
+        >>> dt_wrap = DecisionTreeWrap(data) >>> dt_wrap.set_classifier(method="Random Forest")   # use Random Forest Classifier
         """
         self.METHOD = method
         self.clf = self.__METHOD[method](**kwargs)
@@ -69,7 +80,7 @@ class DecisionTreeWrap:
         """
         return self.METHOD
 
-    def fit(self, **kwargs):
+    def fit(self, is_show_result=True, **kwargs):
         """ fit classifier
 
         Examples:
@@ -78,6 +89,10 @@ class DecisionTreeWrap:
             >>> dt_wrap.fit()
         """
         self.clf.fit(self.train_X, self.train_y, **kwargs)
+        accuracy = accuracy_score(self.clf.predict(self.train_X), self.train_y)
+
+        if is_show_result:
+            print(f"Training Accuracy : {accuracy: 0.3f}")
 
     def predict(self, is_show_result=True):
         """ predict output. input will be selected from test_X
@@ -96,7 +111,7 @@ class DecisionTreeWrap:
         self.accuracy = accuracy_score(self.pred, self.test_y)
 
         if is_show_result:
-            print(f"Accuracy : {self.accuracy: 0.3f}")
+            print(f"Predicted Accuracy : {self.accuracy: 0.3f}")
 
     def check_depth(self, depth_range, **kwargs):
         """ check depth of model
@@ -148,5 +163,6 @@ class DecisionTreeWrap:
         """
         self.importances = {k: v for k, v in zip(self.features, self.clf.feature_importances_)}
 
+        print("========== Feature Importance ==========")
         for k, v in sorted(self.importances.items(), key=lambda x: -x[1]):
-            print(f"feature : {k} \timportance : {v}")
+            print(f"\tFeature : {k} \tImportance : {v}")
