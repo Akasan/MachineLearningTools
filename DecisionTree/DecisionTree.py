@@ -10,20 +10,31 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import roc_curve, auc, accuracy_score
 from sklearn.externals.six import StringIO
 from graphviz import Digraph
+import xgboost as xgb
 import pydotplus
+
+# import config
 
 
 class DecisionTree:
     __METHOD = {"Random Forest": RandomForestClassifier,
-                "Decision Tree": DecisionTreeClassifier}
+                "Decision Tree": DecisionTreeClassifier,
+                "XGBoost": xgb.XGBClassifier}
+
+    _METRICS = {"accuracy": accuracy_score,
+                "roc_curve": roc_curve,
+                "auc": auc}
     
-    def __init__(self, train_X, train_y, test_X, test_y):
+    def __init__(self, train_X, train_y, test_X, test_y, config_from_script=True):
         """
         Arguments:
             train_X {pandas.DataFrame} -- inputs for training
             train_y {pandas.DataFrame} -- outputs for training
             test_X {pandas.DataFrame} -- inputs for testing
             test_y {pandas.DataFrame} -- outputs for testing
+
+        Keyword Arguments:
+            config_from_script {bool} -- whether read config from config.py (default: True)
 
         Examples:
             >>> dt_warap = DecisionTreeWrap(train_X, train_y, test_X, test_y))
@@ -34,12 +45,8 @@ class DecisionTree:
         self.test_y = test_y
         self.features = train_X.columns
 
-    def set_dataset(self, **kwargs):
-        """
-        Keyword Arguments:
-            
-        """
-        pass
+        # if config_from_script:
+        #     self.params = params
 
     def method_list(self):
         """ print method list

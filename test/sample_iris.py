@@ -25,7 +25,7 @@ def main():
     test_X, test_y = test.iloc[:, :-1], test["target"]
 
     dt_wrap = DecisionTree(train_X, train_y, test_X, test_y) 
-    dt_wrap.set_classifier(method="Decision Tree")
+    dt_wrap.set_classifier(method="XGBoost")
     dt_wrap.fit()
     dt_wrap.predict()
     dt_wrap.check_importance()
