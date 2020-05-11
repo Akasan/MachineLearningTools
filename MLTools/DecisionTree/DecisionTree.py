@@ -1,3 +1,6 @@
+import warnings
+warnings.simplefilter('ignore')
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -99,7 +102,7 @@ class DecisionTree:
         accuracy = accuracy_score(self.clf.predict(self.train_X), self.train_y)
 
         if is_show_result:
-            print(f"Training Accuracy : {accuracy: 0.3f}")
+            print(f"- Training Accuracy : {accuracy: 0.3f}")
 
     def predict(self, is_show_result=True):
         """ predict output. input will be selected from test_X
@@ -118,7 +121,7 @@ class DecisionTree:
         self.accuracy = accuracy_score(self.pred, self.test_y)
 
         if is_show_result:
-            print(f"Predicted Accuracy : {self.accuracy: 0.3f}")
+            print(f"- Predicted Accuracy : {self.accuracy: 0.3f}")
 
     def check_depth(self, depth_range, **kwargs):
         """ check depth of model

@@ -1,4 +1,6 @@
 #!/Users/akagawaoozora/opt/anaconda3/bin/python
+import warnings
+warnings.simplefilter('ignore')
 
 import sys
 sys.path.append("../")
@@ -13,7 +15,7 @@ TEST_SIZE = 0.5
 
 
 def load_data():
-    iris = load_preset(name="iris")
+    iris = load_preset(name="wine")
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
     df["target"] = iris.target
     train, test = train_test_split(df, test_size=TEST_SIZE)
