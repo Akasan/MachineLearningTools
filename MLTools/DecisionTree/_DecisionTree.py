@@ -48,13 +48,9 @@ class DecisionTree:
         >>> dt.set_parameter(**params)                            # make classifier instance
     """
 
-    __METHOD = {"Random Forest": RandomForestClassifier,
-                "Decision Tree": DecisionTreeClassifier,
-                "XGBoost": xgb.XGBClassifier}
-
+    __METHOD = {"Random Forest": RandomForestClassifier, "Decision Tree": DecisionTreeClassifier, "XGBoost": xgb.XGBClassifier}
     __METRICS = {"accuracy": accuracy_score, "roc_curve": roc_curve, "auc": auc}
-    __DEFAULT_CONFIG = {"Random Forest": "../config/RandomForestConfig.json",
-                        "Decision Tree": "../config/DecisionTreeConfig.json"}
+    __DEFAULT_CONFIG = {"Random Forest": "../config/RandomForestConfig.json", "Decision Tree": "../config/DecisionTreeConfig.json"}
 
     def __init__(self, method="Random Forest"):
         """
@@ -114,9 +110,7 @@ class DecisionTree:
             param = load_config(filename)
             self.clf = self.__METHOD[self.METHOD](**param)
         else:
-            print(kwargs)
             self.clf = self.__METHOD[self.METHOD](**kwargs)
-
 
     def help_method(self):
         """ print help information of method you specified
