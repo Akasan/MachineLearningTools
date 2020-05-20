@@ -191,7 +191,7 @@ class DecisionTree:
             depth {int} -- how many depth you want to visualize (deafult: -1(means all tree))
         """
         # TODO Random Forestはダメみたい
-        visualize_tree(self.clf, self.feature_name)
+        visualize_tree(self.clf, self.feature_name, self.METHOD)
 
     def check_importance(self, is_plot=False):
         """ print feature importanes
