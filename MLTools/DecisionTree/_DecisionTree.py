@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 
 from .src.ConfigHandler import load_config, save_config
+from .src.Visualizer import visualize_tree
 from sklearn import tree
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -78,7 +79,7 @@ class DecisionTree:
         self.train_X = train_X
         self.train_y = train_y
         self.test_X = test_X
-        self.testyX = test_y
+        self.test_y = test_y
         self.feature_name = self.train_X.columns
 
     def set_parameter(self, is_from_file=False, filename=None, **kwargs):
@@ -189,15 +190,8 @@ class DecisionTree:
         Keyword Arguments:
             depth {int} -- how many depth you want to visualize (deafult: -1(means all tree))
         """
-        if depth == -1:
-            depth = self.clf.get_depth()
-        else:
-            assert 0 <= depth <= self.clf.get_depth(), f"Please set depth from 1 to {self.clf.get_depth()}"
-
-        dot_data = StringIO()
-        tree.export_graphviz(clf, out_file=dot_data, feature_name=self.features, max_depth=depth)
-        graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
-        graph.write_pdf("graph.pdf")
+        # TODO Random Forestはダメみたい
+        visualize_tree(self.clf, self.feature_name)
 
     def check_importance(self, is_plot=False):
         """ print feature importanes
