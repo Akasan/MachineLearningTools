@@ -16,6 +16,7 @@ from sklearn.metrics import roc_curve, auc, accuracy_score
 from sklearn.externals.six import StringIO
 from graphviz import Digraph
 import xgboost as xgb
+import lightgbm as lgb
 import pydotplus
 
 # import config
@@ -190,8 +191,7 @@ class DecisionTree:
         Keyword Arguments:
             depth {int} -- how many depth you want to visualize (deafult: -1(means all tree))
         """
-        # TODO Random Forestはダメみたい
-        visualize_tree(self.clf, self.feature_name, self.METHOD)
+        visualize_tree(self.clf, self.feature_name, self.METHOD, depth)
 
     def check_importance(self, is_plot=False):
         """ print feature importanes

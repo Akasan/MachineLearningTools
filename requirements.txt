@@ -5,3 +5,5 @@ graphviz
 pydotplus
 pandas
 matplotlib
+xgboost
+lightgbm

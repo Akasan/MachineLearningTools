@@ -149,9 +149,70 @@ func_dict = {
     "xdot": _write_xdot,
     "xlib": _write_xlib
 }
-def write_file(graph, filename, mode):
+
+
+def _check_extension(filename):
+    """ check file type
+
+    Arguments:
+    ----------
+        filename {str} -- file name
+
+    Returns:
+    --------
+        {str} -- file extension
+
+    Examples:
+    ---------
+        >>> _check_extension("hoge")
+        None
+        >>> _check_extension("hoge.png")
+        'png'
+    """
+    split_filename = filename.split(".")
+    if len(split_filename) == 1:
+        return None
+
+    return split_filename[-1].lower()
+
+def write_file(graph, filename, mode=None):
+    """ write file
+
+    Arguments:
+    ----------
+        graph {pydotplus.graphviz.Dot} -- graph
+        filename {str} -- file name
+
+    Keyword Arguments:
+    ------------------
+        mode {str} -- type of function (default: None}
+
+    Raises:
+    -------
+        Exception: this raise when write function cannot be loaded
+
+    Examples:
+    ---------
+        >>> write_file(graph, "hoge.png")               # graph will be saved as hoge.png
+        >>> write_file(graph, "hoge.png")               # graph will be saved as hoge.png
+        >>> write_file(graph, "hoge", mode="png")       # the same result
+    """
+    ext = _check_extension(filename)
+    if mode is None and ext is None:
+        raise Exception("There're no matching extension.")
+
+    elif mode is None and not ext is None:
+        mode = ext
+
+    filename += f".{mode}"
     func_dict[mode](graph, filename)
 
 
 def get_format_list():
+    """ get write function list
+
+    Returns:
+    --------
+        {list} -- function list
+    """
     return list(func_dict.keys())
